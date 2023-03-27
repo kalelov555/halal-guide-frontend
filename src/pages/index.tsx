@@ -1,8 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Navbar } from "@/components/Navbar/Navbar";
+import { recentlyViewed } from "@/utils/mock";
+import { CardsCarousel } from "@/components/CardsCarousel/CardsCarousel";
 
 export default function Home() {
   return (
@@ -20,6 +20,14 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Navbar />
+        {recentlyViewed && (
+          <section className={styles.section}>
+            <CardsCarousel
+              title="Recently Viewed"
+              items={recentlyViewed}
+            />
+          </section>
+        )}
       </main>
     </>
   );
