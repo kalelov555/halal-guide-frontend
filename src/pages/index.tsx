@@ -3,6 +3,8 @@ import styles from "@/styles/Home.module.css";
 import { Navbar } from "@/components/Navbar/Navbar";
 import { recentlyViewed } from "@/utils/mock";
 import { CardsCarousel } from "@/components/CardsCarousel/CardsCarousel";
+import { MenuItem } from "@/components/MenuItem/MenuItem";
+import { SearchBarMain } from "@/components/SearchBarMain/SearchBarMain";
 
 export default function Home() {
   return (
@@ -20,14 +22,44 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Navbar />
+        <section className={"section secondMenu"}>
+          <div className={styles.menuContainer}>
+            <div className={styles.menuItems}>
+              <MenuItem title="Restaraunts" />
+              <MenuItem title="Products" />
+              <MenuItem title="Hostels" />
+              <MenuItem title="Mosque" />
+              <MenuItem title="Discussion" />
+            </div>
+            <MenuItem title="Add a place" />
+          </div>
+        </section>
+
+        <section className={"section"}>
+          <div className={styles.searchContainerBro}>
+            <SearchBarMain />
+          </div>
+        </section>
         {recentlyViewed && (
-          <section className={styles.section}>
+          <section className="section">
             <CardsCarousel
               title="Recently Viewed"
               items={recentlyViewed}
             />
           </section>
         )}
+        <section className="section">
+          <CardsCarousel
+            title="Most Loved"
+            items={recentlyViewed}
+          />
+        </section>
+        <section className="section">
+          <CardsCarousel
+            title="You might like this"
+            items={recentlyViewed}
+          />
+        </section>
       </main>
     </>
   );

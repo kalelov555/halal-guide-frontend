@@ -23,3 +23,8 @@ input[type="search"]:focus {
   border-color: #046380;
   outline: none;
 }
+
+.section {
+  padding: 0 120px;
+  margin-top: 30px;
+}
