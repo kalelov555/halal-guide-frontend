@@ -5,9 +5,18 @@ import { recentlyViewed } from "@/utils/mock";
 import { CardsCarousel } from "@/components/CardsCarousel/CardsCarousel";
 import { MenuItem } from "@/components/MenuItem/MenuItem";
 import { SearchBarMain } from "@/components/SearchBarMain/SearchBarMain";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
+import {  getUsersListAction } from "@/store/users/action";
 
 export default function Home() {
+  const { users, status } = useAppSelector(state => state.users)
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUsersListAction())
+  }, [])
   return (
+    status === 'loading' ? <h1>LOADING....</h1> :
     <>
       <Head>
         <title>Halal Guide</title>
