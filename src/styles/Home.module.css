@@ -169,3 +169,22 @@
     13px center;
   background-size: 32px;
 }
+
+.restarauntsMain {
+  background-color: #ECECEC;
+  margin-top: unset;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+ .restarauntsMainWrapper {
+  background-color: #fff;
+  padding: 15px 35px;
+ }
+
+ .restarauntsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: space-between;
+ }

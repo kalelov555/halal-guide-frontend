@@ -8,8 +8,11 @@ import { SearchBarMain } from "@/components/SearchBarMain/SearchBarMain";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import {  getUsersListAction } from "@/store/users/action";
+import { useRouter } from "next/router";
+import { MainLayout } from "@/components/layouts/main";
 
 export default function Home() {
+  const router = useRouter();
   const { users, status } = useAppSelector(state => state.users)
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -29,21 +32,7 @@ export default function Home() {
           content="width=device-width, initial-scale=1"
         />
       </Head>
-      <main className={styles.main}>
-        <Navbar />
-        <section className={"section secondMenu"}>
-          <div className={styles.menuContainer}>
-            <div className={styles.menuItems}>
-              <MenuItem title="Restaraunts" />
-              <MenuItem title="Products" />
-              <MenuItem title="Hostels" />
-              <MenuItem title="Mosque" />
-              <MenuItem title="Discussion" />
-            </div>
-            <MenuItem title="Add a place" />
-          </div>
-        </section>
-
+      <MainLayout>
         <section className={"section"}>
           <div className={styles.searchContainerBro}>
             <SearchBarMain />
@@ -69,7 +58,7 @@ export default function Home() {
             items={recentlyViewed}
           />
         </section>
-      </main>
+      </MainLayout>
     </>
   );
 }
