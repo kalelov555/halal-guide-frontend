@@ -30,9 +30,11 @@ export const Navbar = () => {
           <p>Precious</p>
         </div>
       </div>
-      <button className={styles.signinButton}>
-        Sign in
-      </button>
+      <a style={{ cursor: "pointer" }} href="/login">
+        <button className={styles.signinButton}>
+          Sign in
+        </button>
+      </a>
     </nav>
   );
 };
