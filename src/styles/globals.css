@@ -28,3 +28,99 @@ input[type="search"]:focus {
   padding: 0 120px;
   margin-top: 30px;
 }
+
+.footer {
+  background: #046380;
+  color: #fff;
+  padding: 30px 15%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer > div a {
+  margin: 4px 0;
+  cursor: pointer;
+}
+
+.footer > div a:hover {
+  color: gray;
+}
+
+.typeContainer {
+  margin-top: 20px;
+}
+
+.typeContainer p {
+  padding-left: 20px;
+}
+
+.restaraunt .row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.restaraunt .row .ratingText {
+  font-size: 11px;
+  color: gray;
+}
+
+.restaraunt .mainWrapper {
+  background-color: #ececec;
+  padding: 20px 0;
+}
+
+.restaraunt .mainWrapper .imagesContainer {
+  display: flex;
+  gap: 8px;
+}
+
+.restaraunt .mainWrapper .imagesContainer > div {
+  background-color: #d98585;
+  width: 25%;
+  height: 300px;
+}
+
+.restaraunt .mainWrapper .info {
+  margin-top: 40px;
+  display: flex;
+  gap: 40px;
+}
+
+.restaraunt .mainWrapper .info > div {
+  padding: 16px;
+  background-color: #fff;
+  width: 33.3%;
+}
+
+.restaraunt .mainWrapper .info > div .infoP {
+  font-size: 16px;
+  color: gray;
+  margin-top: 16px;
+}
+
+.restaraunt .mainWrapper .info > div .ratings .ratingsRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+
+.restaraunt
+  .mainWrapper
+  .info
+  > div
+  .ratings
+  .ratingsRow
+  p {
+  font-size: 16px;
+  color: gray;
+}
+
+.bold {
+  font-weight: 600;
+}

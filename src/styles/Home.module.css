@@ -85,6 +85,11 @@
   height: 252px;
 }
 
+.cardImageSM {
+  width: 210px;
+  height: 180px;
+}
+
 .cardName {
   font-weight: 600;
   font-size: 14px;
@@ -123,6 +128,7 @@
   background: #ffffff;
   border: 0.5px solid #046380;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .menuItemName {
@@ -171,20 +177,32 @@
 }
 
 .restarauntsMain {
-  background-color: #ECECEC;
+  background-color: #ececec;
   margin-top: unset;
   padding-top: 30px;
   padding-bottom: 30px;
 }
- .restarauntsMainWrapper {
+.restarauntsMainWrapper {
   background-color: #fff;
   padding: 15px 35px;
- }
+}
 
- .restarauntsContainer {
+.restarauntsContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 20px;
   justify-content: space-between;
- }
+}
+
+.restarauntsCityHeader {
+  text-align: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.restarauntsCityMain {
+  padding: 20px 40px;
+  display: flex;
+  gap: 32px;
+}

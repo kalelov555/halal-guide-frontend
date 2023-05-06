@@ -7,6 +7,7 @@ import { Rating, styled } from "@mui/material";
 type Props = {
   title: String;
   items: Restaraunt[];
+  size: "sm" | "md" | "lg";
 };
 
 const StyledRating = styled(Rating)({
@@ -18,22 +19,41 @@ const StyledRating = styled(Rating)({
   },
 });
 
-export const CardsCarousel = ({ title, items }: Props) => {
+export const CardsCarousel = ({
+  title,
+  items,
+  size,
+}: Props) => {
   return (
     <div className="cards-container">
-      <h3 className={styles.sectionTitle}>{title}</h3>
+      <h3
+        className={styles.sectionTitle}
+        style={
+          size === "sm" ? { margin: "32px 0 24px" } : {}
+        }>
+        {title}
+      </h3>
       <Carousel
         withIndicators
-        height={240}
+        height={
+          size === "sm" ? 200 : size === "md" ? 240 : 300
+        }
         slideSize="25%"
-        slideGap={32}
+        slideGap={size === "sm" ? 0 : 16}
         loop
-        align="center"
         slidesToScroll={4}>
         {items.map((i) => (
           <Carousel.Slide>
-            <div className={styles.cardContainer}>
-              <img className={styles.cardImage} />
+            <a
+              href="/restaraunts/almaty/kochere"
+              className={styles.cardContainer}>
+              <img
+                className={
+                  size === "sm"
+                    ? styles.cardImageSM
+                    : styles.cardImage
+                }
+              />
               <p className={styles.cardName}>
                 {i.location}, {i.name}
               </p>
@@ -49,7 +69,7 @@ export const CardsCarousel = ({ title, items }: Props) => {
                   {i.rating.count}
                 </span>
               </p>
-            </div>
+            </a>
           </Carousel.Slide>
         ))}
       </Carousel>

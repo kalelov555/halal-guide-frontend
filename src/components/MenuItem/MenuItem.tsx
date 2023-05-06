@@ -8,10 +8,12 @@ type Props = {
 export const MenuItem = ({ title }: Props) => {
   const router = useRouter();
   return (
-    <button className={styles.menuItem} onClick={() => router.push("/restaraunts")}>
-      <p className={styles.menuItemName}>
+    <button
+      className={styles.menuItem}
+      onClick={() => router.push("/restaraunts")}>
+      <a className={styles.menuItemName}>
         {title} <img src={`/${title}.svg`} />
-      </p>
+      </a>
     </button>
   );
 };

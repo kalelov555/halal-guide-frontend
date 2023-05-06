@@ -5,21 +5,27 @@ import { recentlyViewed } from "@/utils/mock";
 import { CardsCarousel } from "@/components/CardsCarousel/CardsCarousel";
 import { MenuItem } from "@/components/MenuItem/MenuItem";
 import { SearchBarMain } from "@/components/SearchBarMain/SearchBarMain";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "@/store/hooks";
 import { useEffect } from "react";
-import {  getUsersListAction } from "@/store/users/action";
+import { getUsersListAction } from "@/store/users/action";
 import { useRouter } from "next/router";
 import { MainLayout } from "@/components/layouts/main";
 
 export default function Home() {
   const router = useRouter();
-  const { users, status } = useAppSelector(state => state.users)
+  const { users, status } = useAppSelector(
+    (state) => state.users
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUsersListAction())
-  }, [])
-  return (
-    status === 'loading' ? <h1>LOADING....</h1> :
+    dispatch(getUsersListAction());
+  }, []);
+  return status === "loading" ? (
+    <h1>LOADING....</h1>
+  ) : (
     <>
       <Head>
         <title>Halal Guide</title>
@@ -41,6 +47,7 @@ export default function Home() {
         {recentlyViewed && (
           <section className="section">
             <CardsCarousel
+              size="md"
               title="Recently Viewed"
               items={recentlyViewed}
             />
@@ -48,12 +55,14 @@ export default function Home() {
         )}
         <section className="section">
           <CardsCarousel
+            size="md"
             title="Most Loved"
             items={recentlyViewed}
           />
         </section>
         <section className="section">
           <CardsCarousel
+            size="md"
             title="You might like this"
             items={recentlyViewed}
           />

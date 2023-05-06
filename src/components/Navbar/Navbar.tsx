@@ -4,13 +4,13 @@ import { SearchBar } from "../SearchBar/SearchBar";
 export const Navbar = () => {
   return (
     <nav className={styles.nav}>
-      <div id="brand">
+      <a href="/" id="brand">
         <img
           className={styles.logo}
           alt="logo"
           src="/logo.png"
         />
-      </div>
+      </a>
       <SearchBar />
       <div className={styles.headerButtons}>
         <div className={styles.headerButton}>
