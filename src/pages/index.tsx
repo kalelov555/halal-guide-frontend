@@ -13,15 +13,17 @@ import { useEffect } from "react";
 import { getUsersListAction } from "@/store/users/action";
 import { useRouter } from "next/router";
 import { MainLayout } from "@/components/layouts/main";
+import { getRestarauntsList } from "@/store/restaraunts/api";
+import { getRestarauntsListAction } from "@/store/restaraunts/action";
 
 export default function Home() {
   const router = useRouter();
-  const { users, status } = useAppSelector(
-    (state) => state.users
+  const { restaraunts, status } = useAppSelector(
+    (state) => state.restaraunts
   );
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUsersListAction());
+    dispatch(getRestarauntsListAction());
   }, []);
   return status === "loading" ? (
     <h1>LOADING....</h1>
@@ -44,27 +46,25 @@ export default function Home() {
             <SearchBarMain />
           </div>
         </section>
-        {recentlyViewed && (
           <section className="section">
             <CardsCarousel
               size="md"
               title="Recently Viewed"
-              items={recentlyViewed}
+              items={restaraunts}
             />
           </section>
-        )}
         <section className="section">
           <CardsCarousel
             size="md"
             title="Most Loved"
-            items={recentlyViewed}
+            items={restaraunts}
           />
         </section>
         <section className="section">
           <CardsCarousel
             size="md"
             title="You might like this"
-            items={recentlyViewed}
+            items={restaraunts}
           />
         </section>
       </MainLayout>

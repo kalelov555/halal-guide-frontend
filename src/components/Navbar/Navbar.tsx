@@ -1,16 +1,17 @@
 import styles from "@/styles/Home.module.css";
 import { SearchBar } from "../SearchBar/SearchBar";
+import Link from "next/link";
 
 export const Navbar = () => {
   return (
     <nav className={styles.nav}>
-      <a href="/" id="brand">
+      <Link href="/" id="brand">
         <img
           className={styles.logo}
           alt="logo"
           src="/logo.png"
         />
-      </a>
+      </Link>
       <SearchBar />
       <div className={styles.headerButtons}>
         <div className={styles.headerButton}>
@@ -30,11 +31,11 @@ export const Navbar = () => {
           <p>Precious</p>
         </div>
       </div>
-      <a style={{ cursor: "pointer" }} href="/login">
+      <Link style={{ cursor: "pointer" }} href="/login">
         <button className={styles.signinButton}>
           Sign in
         </button>
-      </a>
+      </Link>
     </nav>
   );
 };

@@ -1,5 +1,5 @@
-import { api } from "../../services/api";
+import { usersApi } from "../../services/api";
 
 export const getUsersList = async () => {
-  return api.get("/users");
+  return usersApi.get("/users");
 };

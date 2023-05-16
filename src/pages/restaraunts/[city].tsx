@@ -4,11 +4,21 @@ import { RestarauntsSidebar } from "@/components/RestarauntsSidebar/RestarauntsS
 import { CardsCarousel } from "@/components/CardsCarousel/CardsCarousel";
 import { recentlyViewed } from "@/utils/mock";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getRestarauntsListAction } from "@/store/restaraunts/action";
 
 export default function City() {
   //   const hrefArr = location.href.split("/");
   //   const city = hrefArr[hrefArr.length - 1];
   const [city, setCity] = useState("");
+
+  const { restaraunts, status } = useAppSelector(
+    (state) => state.restaraunts
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getRestarauntsListAction());
+  }, []);
 
   useEffect(() => {
     const hrefArr = location.href.split("/");
@@ -58,34 +68,38 @@ export default function City() {
           <div
             className=""
             style={{ width: "100%", overflow: "hidden" }}>
-            <section className="">
+            {status === 'succeeded' ? <section className="">
               <CardsCarousel
                 size="sm"
                 title="Delivery available"
-                items={recentlyViewed}
+                items={restaraunts}
               />
+            </section> : <></>}
+          </div>
+          <div
+            className=""
+            style={{ width: "100%", overflow: "hidden" }}>
+            <section className="">
+            {status === 'succeeded' ? <section className="">
+              <CardsCarousel
+                size="sm"
+                title="Outdoor Seating Available"
+                items={restaraunts}
+              />
+            </section> : <></>}
             </section>
           </div>
           <div
             className=""
             style={{ width: "100%", overflow: "hidden" }}>
             <section className="">
+            {status === 'succeeded' ? <section className="">
               <CardsCarousel
                 size="sm"
-                title="Outdoor Sitting available"
-                items={recentlyViewed}
+                title="Cheap Eats"
+                items={restaraunts.filter(r => r.averageCheck <= 1000 )}
               />
-            </section>
-          </div>
-          <div
-            className=""
-            style={{ width: "100%", overflow: "hidden" }}>
-            <section className="">
-              <CardsCarousel
-                size="sm"
-                title="Cheap eats"
-                items={recentlyViewed}
-              />
+            </section> : <></>}
             </section>
           </div>
         </div>

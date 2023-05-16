@@ -1,15 +1,30 @@
 import { GoogleMap } from "@/components/GoogleMap/GoogleMap";
 import { MainLayout } from "@/components/layouts/main";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { getRestarauntsListAction } from "@/store/restaraunts/action";
 import styles from "@/styles/Home.module.css";
 import { Rating } from "@mui/material";
+import { useEffect } from "react";
 
 export default function Restaraunt() {
+  const {restaraunts, status} = useAppSelector(state => state.restaraunts);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getRestarauntsListAction())
+  }, [])
+
+  const nameArr = location.href.split("/");
+  const name = nameArr[nameArr.length-1];
+
+  const restaraunt = restaraunts.find(r => r.info.name === name);
+
   return (
     <MainLayout>
-      <main className="restaraunt">
+      {status === 'succeeded' && <main className="restaraunt">
         <section className="section heading">
           <div className="row">
-            <h1>Kochere</h1>
+            <h1>{name}</h1>
             <p>Certified</p>
           </div>
           <div>
@@ -116,7 +131,7 @@ export default function Restaraunt() {
                   margin: "12px 0 0",
                   color: "black",
                 }}>
-                PRICE RANGE
+                AVARAGE PRICE
               </p>
               <p
                 className="infoP"
@@ -124,7 +139,7 @@ export default function Restaraunt() {
                   margin: "4px 0",
                   color: "black",
                 }}>
-                KZT 1,500 - KZT 4,500
+                {restaraunt?.averageCheck}
               </p>
               <p
                 className="bold infoP"
@@ -140,7 +155,7 @@ export default function Restaraunt() {
                   margin: "4px 0",
                   color: "black",
                 }}>
-                Turkey, Fast Food
+                {restaraunt?.cuisines.join(', ')}
               </p>
               <p
                 className="bold infoP"
@@ -148,7 +163,7 @@ export default function Restaraunt() {
                   margin: "12px 0 0",
                   color: "black",
                 }}>
-                Special Diets
+                SPECIAL DIETS
               </p>
               <p
                 className="infoP"
@@ -156,7 +171,7 @@ export default function Restaraunt() {
                   margin: "4px 0",
                   color: "black",
                 }}>
-                Vegeterian
+                {restaraunt?.dietaryRestrictions.join(', ')}
               </p>
               <p
                 className="bold infoP"
@@ -191,7 +206,7 @@ export default function Restaraunt() {
             </div>
           </section>
         </div>
-      </main>
+      </main>}
     </MainLayout>
   );
 }
