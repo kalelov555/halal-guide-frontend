@@ -1,4 +1,7 @@
-import { Restaraunt, RestarauntApi } from "@/typings/restaraunts";
+import {
+  Restaraunt,
+  RestarauntApi,
+} from "@/typings/restaraunts";
 import { Carousel } from "@mantine/carousel";
 import styles from "@/styles/Home.module.css";
 import { style } from "@mui/system";
@@ -10,6 +13,17 @@ type Props = {
   items: RestarauntApi[];
   size: "sm" | "md" | "lg";
 };
+
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
+const images = [
+  "kochere.jpg",
+  "ksf.jpg",
+  "alani.jpg",
+  "qaganat.jpg",
+];
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -46,9 +60,12 @@ export const CardsCarousel = ({
         {items.map((i) => (
           <Carousel.Slide>
             <Link
-              href={`/restaraunts/almaty/${i.info.name}`}
+              href={`/restaraunts/almaty/${i.info.name.toLowerCase()}`}
               className={styles.cardContainer}>
               <img
+                src={`/restaraunts/${
+                  images[getRandomInt(4)]
+                }`}
                 className={
                   size === "sm"
                     ? styles.cardImageSM

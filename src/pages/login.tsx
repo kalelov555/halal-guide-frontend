@@ -16,42 +16,59 @@ import {
   ThemeProvider,
 } from "@mui/material/styles";
 import { useRouter } from "next/router";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
+import { useSafeSetState } from "react-admin";
+import { Notification } from "@mantine/core";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}>
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+const userCreds = {
+  email: "admin",
+  password: "admin",
+};
 
 const theme = createTheme();
 
 export default function SignIn() {
   const router = useRouter();
+  const [notify, setNotify] = React.useState("nothing");
+
+  React.useEffect(() => {}, [notify]);
   const handleSubmit = (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    router.push("/admin");
+    if (
+      userCreds.email === data.get("email") &&
+      userCreds.password === data.get("password")
+    ) {
+      // notifySuccess("Nice! We are redirecting.....");
+      localStorage.setItem("authorized", "true");
+      router.push("/admin");
+      setNotify("submitting");
+    } else {
+      // notifyError("Error", "Double check your credentials");
+      setNotify("error");
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
+      {notify === "error" && (
+        <Notification
+          icon={<IconX size="1.1rem" />}
+          color="red">
+          Bummer! Double check you credentials
+        </Notification>
+      )}
+      {notify === "submitting" && (
+        <Notification
+          loading
+          title="Nice. We are redirecting..."
+          withCloseButton={false}></Notification>
+      )}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

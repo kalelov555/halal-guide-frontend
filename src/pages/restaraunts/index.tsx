@@ -11,7 +11,7 @@ export default function Restaraunts() {
                 <h1>Restaraunts in {router.query.country ? router.query.country : 'Kazakhstan' }</h1>
                 <div className={styles.restarauntsContainer}>
                     <div>
-                        <img style={{width:'230px',height:'210px',backgroundColor:'red'}} />
+                        <img src="/cities/almaty.jpeg" style={{width:'230px',height:'210px',backgroundColor:'red'}} />
                         <div>
                             <Link href="/restaraunts/almaty">1 Almaty Restaraunts</Link>
                         </div>

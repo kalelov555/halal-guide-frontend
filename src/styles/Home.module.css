@@ -164,7 +164,7 @@
   border: none;
 }
 
-.searchInputMain {
+.searchInputMain input {
   width: 899.25px;
   height: 61px;
   background: #ffffff;
@@ -175,7 +175,6 @@
     13px center;
   background-size: 32px;
 }
-
 .restarauntsMain {
   background-color: #ececec;
   margin-top: unset;

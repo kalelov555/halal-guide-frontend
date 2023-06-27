@@ -4,13 +4,18 @@ import { RestarauntsSidebar } from "@/components/RestarauntsSidebar/RestarauntsS
 import { CardsCarousel } from "@/components/CardsCarousel/CardsCarousel";
 import { recentlyViewed } from "@/utils/mock";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "@/store/hooks";
 import { getRestarauntsListAction } from "@/store/restaraunts/action";
+import { useRouter } from "next/router";
+import { Loader } from "@mantine/core";
 
 export default function City() {
-  //   const hrefArr = location.href.split("/");
-  //   const city = hrefArr[hrefArr.length - 1];
   const [city, setCity] = useState("");
+
+  const router = useRouter();
 
   const { restaraunts, status } = useAppSelector(
     (state) => state.restaraunts
@@ -20,15 +25,24 @@ export default function City() {
     dispatch(getRestarauntsListAction());
   }, []);
 
-  useEffect(() => {
-    const hrefArr = location.href.split("/");
-    setCity(hrefArr[hrefArr.length - 1]);
-  }, [city]);
+  if (status === "loading" || status === "idle")
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+        <Loader />
+      </div>
+    );
 
   return (
     <MainLayout>
       <h1 className={styles.restarauntsCityHeader}>
-        Restaraunts in {city}
+        Restaraunts in {router.query.city}
       </h1>
       <main className={styles.restarauntsCityMain}>
         <div className="sidebar" style={{ width: "250px" }}>
@@ -64,42 +78,50 @@ export default function City() {
             </div>
           </div>
         </div>
-        <div>
-          <div
-            className=""
-            style={{ width: "100%", overflow: "hidden" }}>
-            {status === 'succeeded' ? <section className="">
-              <CardsCarousel
-                size="sm"
-                title="Delivery available"
-                items={restaraunts}
-              />
-            </section> : <></>}
+        <div style={{ maxWidth: "1150px" }}>
+          <div className="" style={{ overflow: "hidden" }}>
+            {status === "succeeded" ? (
+              <section className="">
+                <CardsCarousel
+                  size="sm"
+                  title="Delivery available"
+                  items={restaraunts}
+                />
+              </section>
+            ) : (
+              <></>
+            )}
           </div>
-          <div
-            className=""
-            style={{ width: "100%", overflow: "hidden" }}>
+          <div className="" style={{ overflow: "hidden" }}>
             <section className="">
-            {status === 'succeeded' ? <section className="">
-              <CardsCarousel
-                size="sm"
-                title="Outdoor Seating Available"
-                items={restaraunts}
-              />
-            </section> : <></>}
+              {status === "succeeded" ? (
+                <section className="">
+                  <CardsCarousel
+                    size="sm"
+                    title="Outdoor Seating Available"
+                    items={restaraunts}
+                  />
+                </section>
+              ) : (
+                <></>
+              )}
             </section>
           </div>
-          <div
-            className=""
-            style={{ width: "100%", overflow: "hidden" }}>
+          <div className="" style={{ overflow: "hidden" }}>
             <section className="">
-            {status === 'succeeded' ? <section className="">
-              <CardsCarousel
-                size="sm"
-                title="Cheap Eats"
-                items={restaraunts.filter(r => r.averageCheck <= 1000 )}
-              />
-            </section> : <></>}
+              {status === "succeeded" ? (
+                <section className="">
+                  <CardsCarousel
+                    size="sm"
+                    title="Cheap Eats"
+                    items={restaraunts.filter(
+                      (r) => r.averageCheck <= 1000
+                    )}
+                  />
+                </section>
+              ) : (
+                <></>
+              )}
             </section>
           </div>
         </div>

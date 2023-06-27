@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { MainLayout } from "@/components/layouts/main";
 import { getRestarauntsList } from "@/store/restaraunts/api";
 import { getRestarauntsListAction } from "@/store/restaraunts/action";
+import { Loader } from "@mantine/core";
 
 export default function Home() {
   const router = useRouter();
@@ -26,7 +27,16 @@ export default function Home() {
     dispatch(getRestarauntsListAction());
   }, []);
   return status === "loading" ? (
-    <h1>LOADING....</h1>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
+      <Loader />
+    </div>
   ) : (
     <>
       <Head>
@@ -43,16 +53,20 @@ export default function Home() {
       <MainLayout>
         <section className={"section"}>
           <div className={styles.searchContainerBro}>
-            <SearchBarMain />
+            <SearchBarMain
+              data={
+                status === "succeeded" ? restaraunts : []
+              }
+            />
           </div>
         </section>
-          <section className="section">
-            <CardsCarousel
-              size="md"
-              title="Recently Viewed"
-              items={restaraunts}
-            />
-          </section>
+        <section className="section">
+          <CardsCarousel
+            size="md"
+            title="Recently Viewed"
+            items={restaraunts}
+          />
+        </section>
         <section className="section">
           <CardsCarousel
             size="md"

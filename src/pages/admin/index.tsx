@@ -1,32 +1,67 @@
-// in src/admin/App.jsx
-// import * as React from "react";
-// import { fetchUtils, Admin, Resource, ListGuesser } from 'react-admin';
-// import jsonServerProvider from 'ra-data-json-server';
-import dynamic from "next/dynamic";
-
-// const httpClient = (url:string, options = {} as any) => {
-//   if (!options.headers) {
-//       options.headers = new Headers({ Accept: 'application/json' });
-//   }
-//   // add your own headers here
-//   options.headers.set('Access-Control-Expose-Headers', 'X-Total-Count'); //<----see here
-//   options.headers.set('X-Total-Count', 5); //<----see here
-//   return fetchUtils.fetchJson(url, options);
-// };
-
-// const dataProvider = jsonServerProvider('http://localhost:3000', httpClient);
-
-// const Component = <Admin dataProvider={dataProvider}>
-// <Resource name="restaurants" list={ListGuesser} />
-// <Resource name="hostels" list={ListGuesser} />
-// <Resource name="prayer_rooms" list={ListGuesser} />
-// <Resource name="products" list={ListGuesser} />
-// </Admin>
-
-const AdminPanelComponent = dynamic(() => import('../../components/Admin'), {ssr: false}) 
-
-
+import { RestarauntCard } from "@/components/RestarauntCard/RestarauntCard";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "@/store/hooks";
+import { getAdminRestatauntsListAction } from "@/store/restaraunts/action";
+import { Badge } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function AdminPanel() {
-  return <AdminPanelComponent />
+  const router = useRouter();
+  const { adminRestaraunts, status } = useAppSelector(
+    (state) => state.restaraunts
+  );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (!localStorage.getItem("authorized"))
+      router.push("/login");
+
+    dispatch(getAdminRestatauntsListAction());
+  }, []);
+
+  return (
+    <>
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+        }}>
+        <div
+          style={{
+            width: "25%",
+            minHeight: "100vh",
+            background: "#65b1e0",
+            textAlign: "left",
+            color: "#fff",
+            paddingLeft: "20px",
+          }}>
+          <Badge
+            style={{ marginTop: "30px" }}
+            color="error"
+            badgeContent={adminRestaraunts.length}>
+            <h1>pending restaraunts</h1>
+          </Badge>
+          <Link
+            style={{ color: "#fff" }}
+            href="/admin/active">
+            <h1>active restaraunts</h1>
+          </Link>
+        </div>
+        <div style={{ width: "75%" }}>
+          <h1 style={{ marginTop: "20px" }}>
+            Pending Restaurants
+          </h1>
+          {adminRestaraunts.map((restaraunt) => (
+            <div
+              style={{ width: "60%", marginTop: "30px" }}>
+              <RestarauntCard restaraunt={restaraunt} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
 }
