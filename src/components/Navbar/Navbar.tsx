@@ -32,7 +32,9 @@ export const Navbar = () => {
         </div>
       </div>
       <Link style={{ cursor: "pointer" }} href="/login">
-        <button className={styles.signinButton}>
+        <button
+          className={styles.signinButton}
+          style={{ cursor: "pointer" }}>
           Sign in
         </button>
       </Link>

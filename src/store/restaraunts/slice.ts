@@ -12,7 +12,17 @@ type RestarauntsState = {
   adminRestaraunts: RestarauntApi[];
   restaraunts: RestarauntApi[];
   status: "idle" | "loading" | "succeeded";
-  updatingStatus: "idle" | "loading" | "succeeded";
+  adminStatus: "idle" | "loading" | "succeeded";
+  updatingStatus:
+    | "idle"
+    | "loading"
+    | "succeeded"
+    | "failed";
+  creatingStatus:
+    | "idle"
+    | "loading"
+    | "succeeded"
+    | "failed";
 };
 
 const initialState: RestarauntsState = {
@@ -20,6 +30,8 @@ const initialState: RestarauntsState = {
   restaraunts: [],
   status: "idle",
   updatingStatus: "idle",
+  creatingStatus: "idle",
+  adminStatus: "idle",
 };
 
 export const restarauntsSlice = createSlice({
@@ -45,25 +57,31 @@ export const restarauntsSlice = createSlice({
       .addCase(
         createNewRestaurantAction.pending,
         (state) => {
-          state.status = "loading";
+          state.creatingStatus = "loading";
         }
       )
       .addCase(
         createNewRestaurantAction.fulfilled,
         (state, action) => {
-          state.status = "succeeded";
+          state.creatingStatus = "succeeded";
+        }
+      )
+      .addCase(
+        createNewRestaurantAction.rejected,
+        (state, action) => {
+          state.creatingStatus = "failed";
         }
       )
       .addCase(
         getAdminRestatauntsListAction.pending,
         (state) => {
-          state.status = "loading";
+          state.adminStatus = "loading";
         }
       )
       .addCase(
         getAdminRestatauntsListAction.fulfilled,
         (state, action) => {
-          state.status = "succeeded";
+          state.adminStatus = "succeeded";
           if (action.payload)
             state.adminRestaraunts = action.payload;
         }
@@ -75,6 +93,12 @@ export const restarauntsSlice = createSlice({
         updateRestarauntAction.fulfilled,
         (state, action) => {
           state.updatingStatus = "succeeded";
+        }
+      )
+      .addCase(
+        updateRestarauntAction.rejected,
+        (state, action) => {
+          state.updatingStatus = "failed";
         }
       ),
 });

@@ -44,12 +44,10 @@ export default function SignIn() {
       userCreds.email === data.get("email") &&
       userCreds.password === data.get("password")
     ) {
-      // notifySuccess("Nice! We are redirecting.....");
       localStorage.setItem("authorized", "true");
       router.push("/admin");
       setNotify("submitting");
     } else {
-      // notifyError("Error", "Double check your credentials");
       setNotify("error");
     }
   };

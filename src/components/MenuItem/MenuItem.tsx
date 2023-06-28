@@ -1,4 +1,5 @@
 import styles from "@/styles/Home.module.css";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -10,12 +11,15 @@ export const MenuItem = ({ title }: Props) => {
   let path = title.toLowerCase();
   if (title === "Add a place") path = "add-new";
   return (
-    <button
-      className={styles.menuItem}
-      onClick={() => router.push(`/${path}`)}>
-      <a className={styles.menuItemName}>
-        {title} <img src={`/${title}.svg`} />
-      </a>
-    </button>
+    <Link href={`/${path}`}>
+      <button className={styles.menuItem}>
+        <div className={styles.menuItemName}>
+          {title}{" "}
+          {title !== "Add a place" && (
+            <img src={`/${title}.svg`} />
+          )}
+        </div>
+      </button>
+    </Link>
   );
 };

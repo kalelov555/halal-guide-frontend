@@ -19,13 +19,12 @@ import { useEffect, useState } from "react";
 import { IconCheck, IconX } from "@tabler/icons-react";
 
 export const AddNewItem = () => {
-  const { restaraunts, status } = useAppSelector(
+  const { restaraunts, creatingStatus } = useAppSelector(
     (state) => state.restaraunts
   );
   const [notificationClosed, setNotificationClosed] =
     useState(false);
   const dispatch = useAppDispatch();
-  useEffect(() => {}, [status]);
   const handleSumbit = (
     event: React.FormEvent<HTMLFormElement>
   ) => {
@@ -105,7 +104,6 @@ export const AddNewItem = () => {
               type="text"
               name="name"
               size="small"
-              // style={{ width: "60%", marginTop: "30px" }}
               label="name"
               onChange={handleChange}
             />
@@ -114,18 +112,9 @@ export const AddNewItem = () => {
               type="text"
               name="description"
               size="small"
-              // style={{ width: "60%" }}
               label="description"
               onChange={handleChange}
             />
-            {/* <Autocomplete /> */}
-            {/* <TextareaAutosize
-              minRows={5}
-              id="cuisines"
-              name="cuisines"
-              placeholder="Turkish,Korean,Chinese,Eastern,European,Caribbean,Thai,Indian,Japanese,Georgian,American"
-              onChange={(event) => handleChange(event)}
-            /> */}
             <TextField
               id="cuisines"
               type="text"
@@ -140,7 +129,6 @@ export const AddNewItem = () => {
               type="text"
               name="averageCheck"
               size="small"
-              // style={{ width: "60%" }}
               label="average check"
               onChange={handleChange}
             />
@@ -149,7 +137,6 @@ export const AddNewItem = () => {
               type="text"
               name="dietaryRestrictions"
               size="small"
-              // style={{ width: "60%" }}
               label="dietary"
               onChange={handleChange}
               placeholder="Vegetarian,Vegan,Gluten-Free,Kosher"
@@ -169,7 +156,6 @@ export const AddNewItem = () => {
               type="text"
               name="meals"
               size="small"
-              // style={{ width: "60%" }}
               label="meals"
               onChange={handleChange}
               placeholder="Breakfast,Brunch,Lunch,Dinner"
@@ -179,7 +165,6 @@ export const AddNewItem = () => {
               type="text"
               name="openTime"
               size="small"
-              // style={{ width: "60%" }}
               label="open time"
               onChange={handleChange}
             />
@@ -188,7 +173,6 @@ export const AddNewItem = () => {
               type="text"
               name="payment"
               size="small"
-              // style={{ width: "60%" }}
               label="payment"
               placeholder="Cash,Credit Card,QR"
               onChange={handleChange}
@@ -208,7 +192,6 @@ export const AddNewItem = () => {
               type="text"
               name="status"
               size="small"
-              // style={{ width: "60%" }}
               label="status"
               placeholder="Halal or Jaiz or Haram or Mushbooh"
               onChange={handleChange}
@@ -218,7 +201,6 @@ export const AddNewItem = () => {
               type="text"
               name="statusReason"
               size="small"
-              // style={{ width: "60%" }}
               label="status reason"
               onChange={handleChange}
             />
@@ -227,7 +209,6 @@ export const AddNewItem = () => {
               type="text"
               name="type"
               size="small"
-              // style={{ width: "60%" }}
               label="type"
               onChange={handleChange}
               placeholder="Restaurant|Cafe|Fast Food|Buffet"
@@ -237,7 +218,6 @@ export const AddNewItem = () => {
               type="text"
               name="website"
               size="small"
-              // style={{ width: "60%" }}
               label="website"
               onChange={handleChange}
             />
@@ -250,9 +230,14 @@ export const AddNewItem = () => {
             variant="outlined"
             style={{ marginTop: "30px", width: "200px" }}>
             Create
-            {status === "loading" && <Loader />}
+            {creatingStatus === "loading" && (
+              <Loader
+                size="sm"
+                style={{ marginLeft: "10px" }}
+              />
+            )}
           </Button>
-          {status === "succeeded" &&
+          {creatingStatus === "succeeded" &&
             !notificationClosed && (
               <Notification
                 style={{ marginTop: "20px" }}
@@ -261,6 +246,17 @@ export const AddNewItem = () => {
                 onClose={() => setNotificationClosed(true)}
                 title="Nice!">
                 Place has been created
+              </Notification>
+            )}
+          {creatingStatus === "failed" &&
+            !notificationClosed && (
+              <Notification
+                style={{ marginTop: "20px" }}
+                icon={<IconCheck size="1.1rem" />}
+                color="red"
+                onClose={() => setNotificationClosed(true)}
+                title="Error!">
+                Please recheck all fields
               </Notification>
             )}
         </form>

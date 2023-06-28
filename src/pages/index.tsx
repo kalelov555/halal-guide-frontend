@@ -26,7 +26,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getRestarauntsListAction());
   }, []);
-  return status === "loading" ? (
+  return status === "loading" || status === "idle" ? (
     <div
       style={{
         width: "100%",

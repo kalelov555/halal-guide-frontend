@@ -4,14 +4,17 @@ import {
   useAppSelector,
 } from "@/store/hooks";
 import { getAdminRestatauntsListAction } from "@/store/restaraunts/action";
+import { Loader, Notification } from "@mantine/core";
 import { Badge } from "@mui/material";
+import { IconCheck } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AdminPanel() {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const { adminRestaraunts, status } = useAppSelector(
+  const { adminRestaraunts, adminStatus } = useAppSelector(
     (state) => state.restaraunts
   );
   const dispatch = useAppDispatch();
@@ -19,8 +22,44 @@ export default function AdminPanel() {
     if (!localStorage.getItem("authorized"))
       router.push("/login");
 
+    setIsLoading(false);
     dispatch(getAdminRestatauntsListAction());
   }, []);
+
+  if (
+    adminStatus === "idle" ||
+    adminStatus === "loading" ||
+    isLoading
+  )
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+        <Loader />
+      </div>
+    );
+
+  if (!localStorage.getItem("authorized"))
+    return (
+      <>
+        <Notification
+          icon={<IconCheck size="1.1rem" />}
+          color="red"
+          title="Error!">
+          You are not authorized
+        </Notification>
+        <Notification
+          loading
+          title="We are redirecting..."
+          withCloseButton={false}
+        />
+      </>
+    );
 
   return (
     <>
